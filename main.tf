@@ -24,7 +24,7 @@ resource "aws_iam_policy" "policy" {
  resource  "aws_iam_role"  "role"  {
   name = "${component}-${var.env}-ec2-role"
 
-  assume_role_policy = "jsonencode"({
+  assume_role_policy = jsonencode({
       version = "2012-10-17"
       statement = [
         {
@@ -37,16 +37,18 @@ resource "aws_iam_policy" "policy" {
         },
       ]
   })
-}
+ }
 resource "aws_iam-instance_profile" "instance_profile"  {
         name  = "${var.component-${var.env}-ec2-role"
         role  = aws_iam_role.role.name
-    }
+      }
+
+
 resource "aws_security_group" "sg" {
   name        = "${var.component}-${var.env}-sg"
   description = "${var.component}-${var.env}-sg"
 
-  ingress {
+   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -58,8 +60,6 @@ resource "aws_security_group" "sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-}
  resource "aws_instance" "web" {
       ami = data.aws_ami.example.id
       instance_type          = "t3.micro"
@@ -96,6 +96,7 @@ resource "null_resource"  "ansible" {
          inline =  {
             "Sudo labauto ansible",
             "ansible-pull -i  localhost, -u https://github.com/Rajesh-2406/roboshop-ansible.git main.yml -e env=${var.env} -e role_name = ${var.component}
-         }
+         }"
         }
        }
+     }
