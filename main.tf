@@ -15,7 +15,7 @@ resource "aws_iam_policy" "policy" {
           "ssm:GetParameters",
           "ssm:GetParameter"
         ],
-        "Resource" : "arn:aws:ssm:us-east-1:600222537277:parameter/roboshop.dev.frontend.*"
+        "Resource" : "arn:aws:ssm:us-east-1:600222537277:parameter/roboshop.${var.env}.${var.component}.*"
       }
     ]
   })
@@ -66,7 +66,7 @@ resource "aws_security_group" "sg" {
   }
 }
  resource "aws_instance" "instance" {
-   ami                    = data.aws_ami.ami.id
+   ami                    = data.aws_ami
    instance_type          = "t3.small"
    vpc_security_group_ids = ["aws_security_group.sg.id"]
    iam_instance_profile   = aws_iam_instance_profile.instance_profile.name
@@ -86,7 +86,7 @@ resource "aws_security_group" "sg" {
 
 resource "null_resource"  "ansible" {
         depends_on  = [aws_instance.instance,aws_route53_record.dns]
-        provosioner "remote-exec" {
+        provisioner "remote-exec" {
            connection  {
              type =  "ssh"
              user  = "centos"
