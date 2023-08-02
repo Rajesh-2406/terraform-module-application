@@ -81,7 +81,7 @@ resource "aws_security_group" "sg" {
         name  = "${var.component}-dev"
         type  = "A"
         ttl   = 30
-        records = [aws_instance.instance,private_ip]
+        records = [aws_instance.instance.private_ip]
      }
 
 resource "null_resource"  "ansible" {
