@@ -64,7 +64,7 @@ resource "aws_security_group" "sg" {
     name = "${var.component}=${var.env}-sg"
   }
 }
- resource "aws_instance" "instance" {
+resource "aws_instance" "instance" {
    ami                    = data.aws_ami.ami.id
    instance_type          = "t3.small"
    vpc_security_group_ids = ["aws_security_group.sg.id"]
@@ -75,7 +75,7 @@ resource "aws_security_group" "sg" {
    }
  }
 
- resource "aws_route53_record"  "dns" {
+resource "aws_route53_record"  "dns" {
         zone_id = "z055331734ICV430E01P7"
         name  = "${var.component}-dev"
         type  = "A"
