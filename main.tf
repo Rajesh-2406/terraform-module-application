@@ -21,21 +21,20 @@ resource "aws_iam_policy" "policy" {
   })
 }
 
- resource  "aws_iam_role"  "role"  {
+resource  "aws_iam_role"  "role"  {
   name = "${var.component}-${var.env}-ec2-role"
 
   assume_role_policy = jsonencode({
-      version = "2012-10-17"
-      statement = [
-        {
-          Action = "sts:AssumeRole"
-          Effect = "Allow"
-          Sid = ""
-          principal = {
-             service = "ec2.amazonaws.com"
-          }
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "ec2.amazonaws.com"
         },
-      ]
+        "Action": "sts:AssumeRole"
+      }
+    ]
   })
  }
 resource "aws_iam_instance_profile" "instance_profile"  {
