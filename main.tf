@@ -76,7 +76,7 @@ resource "aws_instance" "instance" {
  }
 
 resource "aws_route53_record"  "dns" {
-        zone_id = "z055331734ICV430E01P7"
+        zone_id = "Z0536318FEJNHSSCY1LA"
         name  = "${var.component}-dev"
         type  = "A"
         ttl   = 30
