@@ -28,12 +28,13 @@ resource  "aws_iam_role"  "role"  {
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "ec2.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      }
+        Action  = "sts:AssumeRole"
+        Effect  = "Allow"
+        Sid = ""
+        principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
     ]
   })
  }
