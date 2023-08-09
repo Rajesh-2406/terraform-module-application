@@ -54,8 +54,8 @@ resource "aws_security_group" "sg" {
   description = "${var.component}-${var.env}-sg"
 
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 0
+    to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -102,7 +102,7 @@ resource "null_resource"  "ansible" {
            }
            inline =  [
              "sudo labauto ansible",
-             "ansible-pull -i localhost, -U https://github.com/Rajesh-2406/roboshop-ansible main.yml-e role_name=${var.component}"
+             "ansible-pull -i localhost, -U https://github.com/Rajesh-2406/roboshop-ansible main.yml -e role_name=${var.component}"
             ]
         }
  }
