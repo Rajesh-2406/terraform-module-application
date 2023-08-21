@@ -79,7 +79,7 @@ resource "aws_instance" "instance" {
    tags = merge ({
      Name = "${var.component}-${var.env}"
    },
-     var.tag)
+     var.tags)
  }
 
 resource "aws_route53_record"  "dns" {
