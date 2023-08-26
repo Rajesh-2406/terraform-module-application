@@ -1,3 +1,4 @@
+/*
 resource "aws_iam_policy" "policy" {
   name        = "${var.component}-${var.env}-ssm-pm-policy"
   path        = "/"
@@ -104,6 +105,42 @@ resource "null_resource"  "ansible" {
            inline =  [
              "sudo labauto ansible",
              "ansible-pull -i localhost, -U https://github.com/Rajesh-2406/roboshop-ansible main.yml -e env=dev -e role_name=${var.component}"
-            ]
-        }
- }
+             }
+           }
+           }
+           }
+           }
+
+*/
+
+
+resource "aws_security_group" "sg" {
+   name        = "test-${var.env}-sg"
+   description = "test-${var.env}-sg"
+
+ingress {
+   from_port   = 0
+   to_port     = 0
+   protocol    = "-1"
+   cidr_blocks = ["0.0.0.0/0"]
+}
+egress {
+   from_port   = 0
+   to_port     = 0
+   protocol    = "-1"
+   cidr_blocks = ["0.0.0.0/0"]
+
+}
+tags = {
+ name = "${var.component}-${var.env}-sg"
+}
+}
+resource "aws_instance" "test" {
+  ami = data.aws_ami.ami.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [aws_security_group.sg.id]
+  subnet_id = var.subnet_id
+  tags = {
+    Name = var.component
+  }
+}
