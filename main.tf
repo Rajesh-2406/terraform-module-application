@@ -135,6 +135,8 @@ tags = {
  name = "${var.component}-${var.env}-sg"
 }
 }
+
+
 resource "aws_instance" "test" {
 
   ami = data.aws_ami.ami.id
